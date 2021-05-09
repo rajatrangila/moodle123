@@ -1,0 +1,27 @@
+<ion-tabs #mainTabs [hidden]="!showTabs" [class]="'placement-' + tabsPlacement" [class.tabshidden]="hidden"
+    (ionTabsDidChange)="tabChanged($event)">
+    <ion-tab-bar slot="bottom" [hidden]="hidden">
+        <ion-spinner *ngIf="!loaded"></ion-spinner>
+
+        <ion-tab-button (ionTabButtonClick)="tabClicked($event, tab.page)" [hidden]="!loaded && tab.hide" *ngFor="let tab of tabs"
+            [tab]="tab.page" [disabled]="tab.hide" layout="label-hide"  class="{{tab.class}}"
+            [attr.aria-label]="tab.title | translate">
+            <ion-icon [name]="tab.icon" aria-hidden="true"></ion-icon>
+            <ion-label aria-hidden="true">{{ tab.title | translate }}</ion-label>
+            <ion-badge *ngIf="tab.badge">{{ tab.badge }}</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button (ionTabButtonClick)="tabClicked($event, morePageName)" [hidden]="!loaded" [tab]="morePageName" layout="label-hide">
+            <ion-icon name="fas-bars" [attr.aria-labelledby]="'mainmenu-tab-more'"></ion-icon>
+            <ion-label id="mainmenu-tab-more">{{ 'core.more' | translate }}</ion-label>
+        </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>
+<div class="core-network-message" [hidden]="!showTabs">
+    <div class="core-online-message">
+        {{ "core.youreonline" | translate }}
+    </div>
+    <div class="core-offline-message">
+        {{ "core.youreoffline" | translate }}
+    </div>
+</div>
